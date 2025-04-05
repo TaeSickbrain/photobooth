@@ -1,9 +1,18 @@
-let videoElement = document.getElementById('video');
+window.onload = () => {
+    const overlayContainer = document.getElementById("overlay-choice");
+    overlayContainer.querySelectorAll("img").forEach((img, i) => {
+        img.src = getAsset(`overlay${i}`);
+    });
+}
+
+let videoElement = document.getElementById('video'); 
+let overlayElement = document.getElementById('overlay'); 
 let canvasElement = document.getElementById('canvas');
 let countdownElement = document.getElementById('countdown');
 let photoStripElement = document.getElementById('photoStrip');
 let downloadBtn = document.getElementById('downloadBtn');
 let currentFilter = 'none';
+let currentOverlay = 'none';
 let captureCount = 0;
 let capturedImages = [''];
 let countdownDuration = 3;
@@ -20,6 +29,11 @@ function startCamera() {
 function applyFilter(filter) {
     currentFilter = filter;
     videoElement.style.filter = currentFilter;
+}
+
+function applyOverlay(overlay) {
+    currentOverlay = overlay;
+    overlayElement.src = getAsset(currentOverlay);
 }
 
 function startSession() {
@@ -59,6 +73,7 @@ function capturePhoto() {
     let ctx = canvasElement.getContext('2d');
     ctx.filter = currentFilter;
     ctx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
+    ctx.drawImage(overlayElement, 0, 0, canvasElement.width, canvasElement.height);
 
     let imageData = canvasElement.toDataURL('image/png');
     capturedImages[captureCount] = imageData;
@@ -87,6 +102,7 @@ function updatePhotoStrip() {
 
     for (let i = 0; i < 1; i++) {
         let imgElement = document.createElement('img');
+        imgElement.id = 'result';
         imgElement.style.width = '150px';
         imgElement.style.border = '2px solid black';
         imgElement.style.borderRadius = '10px';

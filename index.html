@@ -11,6 +11,7 @@
         <div>
             <div class="video-container">
                 <video id="video" autoplay></video>
+                <img id="overlay">
                 <div id="countdown"></div>
             </div>
 
@@ -28,6 +29,12 @@
                 <button onclick="applyFilter('contrast(2)')">Contrast</button>
             </div>
 
+            <div class="overlay-buttons" id="overlay-choice">
+                <button onclick="applyOverlay('overlay0')"><img></button>
+                <button onclick="applyOverlay('overlay1')"><img></button>
+                <button onclick="applyOverlay('overlay2')"><img></button>
+            </div>
+
             <canvas id="canvas" width="640" height="480"></canvas>
         </div>
 
@@ -36,6 +43,7 @@
             <button id="downloadBtn" onclick="downloadPhotoStrip()">Download Photo Strip</button>
         </div>
     </div>
+    <script src="assets.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

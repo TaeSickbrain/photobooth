@@ -71,7 +71,7 @@ button:hover {
   flex-direction: column;
   gap: 10px;
 }
-img {
+img#result {
   width: 150px;
   border-radius: 10px;
   border: 2px solid black;
@@ -79,4 +79,17 @@ img {
 #downloadBtn {
   display: none;
   margin-top: 15px;
+}
+.overlay-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+.overlay-buttons img {
+  width: 200px;
+  background: radial-gradient(silver, white);
+}
+#overlay {
+  position: absolute;
+  max-width: 640px;
 }
