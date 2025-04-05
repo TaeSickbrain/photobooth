@@ -1,10 +1,3 @@
-window.onload = () => {
-    const overlayContainer = document.getElementById("overlay-choice");
-    overlayContainer.querySelectorAll("img").forEach((img, i) => {
-        img.src = getAsset(`overlay${i}`);
-    });
-}
-
 let videoElement = document.getElementById('video'); 
 let overlayElement = document.getElementById('overlay'); 
 let canvasElement = document.getElementById('canvas');
@@ -33,7 +26,7 @@ function applyFilter(filter) {
 
 function applyOverlay(overlay) {
     currentOverlay = overlay;
-    overlayElement.src = getAsset(currentOverlay);
+    overlayElement.src = currentOverlay;
 }
 
 function startSession() {
@@ -72,7 +65,7 @@ function takePhotoWithCountdown() {
 function capturePhoto() {
     let ctx = canvasElement.getContext('2d');
     ctx.filter = currentFilter;
-    ctx.drawImage(videoElement, 0, 0, canvasElement.width, canvasElement.height);
+    ctx.drawImage(videoElement, 0, 90, canvasElement.width, canvasElement.height - 180);
     ctx.drawImage(overlayElement, 0, 0, canvasElement.width, canvasElement.height);
 
     let imageData = canvasElement.toDataURL('image/png');
@@ -120,29 +113,32 @@ function updatePhotoStrip() {
 function createPhotoStrip() {
     let finalCanvas = document.createElement('canvas');
     let ctx = finalCanvas.getContext('2d');
-    let width = 640;
-    let height = 480;
+    let width = 960;
+    let height = 720;
 
     finalCanvas.width = width;
     finalCanvas.height = height;
 
-    let loadedImages = 0;
-
-    capturedImages.forEach((src, index) => {
-        let img = new Image();
-        img.src = src;
-        img.onload = () => {
-            ctx.drawImage(img, 0, index * 480, width, 480);
-            loadedImages++;
-            if (loadedImages === 1) {
-                let finalImage = finalCanvas.toDataURL('image/png');
-                let finalImgElement = document.createElement('img');
-                finalImgElement.src = finalImage;
-                finalImgElement.style.width = '200px';
-                photoStripElement.innerHTML = '';
-                photoStripElement.appendChild(finalImgElement);
-                downloadBtn.style.display = 'block';
-            }
-        };
-    });
+    let img = new Image();
+    img.src = capturedImages[0];
+    img.onload = () => {
+        ctx.drawImage(img, 0, 0, width, 720);
+        let finalImage = finalCanvas.toDataURL('image/png');
+        const formData = new FormData()
+        finalCanvas.toBlob((b) => {
+            formData.append('photostrip', b, 'photostrip.png')
+            fetch("/upload", {
+                method: "POST",
+                headers: {
+                },
+                body: formData
+            })
+        })
+        let finalImgElement = document.createElement('img');
+        finalImgElement.src = finalImage;
+        finalImgElement.style.width = '200px';
+        photoStripElement.innerHTML = '';
+        photoStripElement.appendChild(finalImgElement);
+        downloadBtn.style.display = 'block';
+    };
 }

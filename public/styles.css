@@ -19,8 +19,8 @@ body {
 }
 video {
   border-radius: 10px;
-  width: 100%;
-  max-width: 640px;
+  /* width: 640px; */
+  /* height: 480px; */
 }
 canvas {
   display: none;
@@ -57,7 +57,7 @@ button:hover {
 #countdown {
   position: absolute;
   font-size: 50px;
-  color: white;
+  color: red;
   font-weight: bold;
   display: none;
 }

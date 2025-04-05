@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Booth</title>
+    <link href="styles.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div>
+            <div class="video-container">
+                <video id="video" autoplay height="360" width="640"></video>
+                <img id="overlay">
+                <div id="countdown"></div>
+            </div>
+
+            <div class="controls">
+                <button onclick="startCamera()">Start Camera</button>
+                <button onclick="startSession()">Start</button>
+            </div>
+
+            <div class="filter-buttons">
+                <button onclick="applyFilter('none')">None</button>
+                <button onclick="applyFilter('grayscale(100%)')">Grayscale</button>
+                <button onclick="applyFilter('sepia(100%)')">Sepia</button>
+                <button onclick="applyFilter('blur(5px)')">Blur</button>
+                <button onclick="applyFilter('brightness(1.5)')">Brightness</button>
+                <button onclick="applyFilter('contrast(2)')">Contrast</button>
+            </div>
+
+            <div class="overlay-buttons" id="overlay-choice">
+                <button onclick="applyOverlay('./overlay0.png')"><img src="./overlay0.png"></button>
+                <button onclick="applyOverlay('./overlay1.png')"><img src="./overlay1.png"></button>
+                <button onclick="applyOverlay('./overlay2.png')"><img src="./overlay2.png"></button>
+            </div>
+
+            <canvas id="canvas" width="960" height="720"></canvas>
+        </div>
+
+        <div class="photo-strip-container">
+            <div class="photoStrip" id="photoStrip"></div>
+            <button id="downloadBtn" onclick="downloadPhotoStrip()">Download Photo Strip</button>
+        </div>
+    </div>
+<script src="assets.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
